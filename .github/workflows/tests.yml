@@ -1,0 +1,37 @@
+name: Build and Test
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  macOS-test:
+    runs-on: macOS-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Install dependencies and build
+        run: mvn install --file pom.xml
+      - name: Test with Maven
+        run: mvn test --file pom.xml
+
+  windows-test:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Install dependencies and build
+        run: mvn install --file pom.xml
+      - name: Test with Maven
+        run: mvn test --file pom.xml
